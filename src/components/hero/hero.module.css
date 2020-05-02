@@ -1,0 +1,43 @@
+.content {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.content > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: var(--padding-content);
+    color: white;
+    opacity: 1;
+
+    transition: ease-in-out 0.5s all;
+}
+
+.hero:hover {
+    opacity: 0;
+}
+
+.description {
+    display: block;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 8rem;
+    margin-top: 4rem;
+}
+
