@@ -8,13 +8,21 @@ class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      near_earth_objects: [],
+			near_earth_objects: [],
+			mars_photos: []
     };
   }
 
   componentDidMount() {
-    this.fetchNearEarthObjects();
-  }
+		this.fetchNearEarthObjects();
+		this.fetchMarsPhotos();
+	}
+
+	getTodayFormattedDate() {
+		const today = new Date();
+		const formattedDate = Moment(today).format("YYYY-MM-DD");
+		return formattedDate;
+	}
 
   async fetchNearEarthObjects() {
     try {
@@ -22,15 +30,32 @@ class Main extends Component {
         near_earth_objects: [],
       });
 
-      const today = new Date();
-      const formattedDate = Moment(today).format("YYYY-MM-DD");
-
+      const formattedDate = this.getTodayFormattedDate();
       const data = await request(
         `https://api.nasa.gov/neo/rest/v1/feed?start_date=${formattedDate}&end_date=${formattedDate}&api_key=${environment.api_key}`
-      );
-      console.log(data.near_earth_objects[formattedDate][0]);
+			);
+			
       this.setState({
         near_earth_objects: data.near_earth_objects[formattedDate],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+	}
+	
+  async fetchMarsPhotos() {
+    try {
+      this.setState({
+        mars_photos: [],
+			});
+
+      const data = await request(
+        `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${environment.api_key}`
+			);
+
+			console.log(data.photos);
+      this.setState({
+        mars_photos: data.photos
       });
     } catch (error) {
       console.error(error);
@@ -40,11 +65,24 @@ class Main extends Component {
   render() {
     return (
       <main className={styles["content"]}>
-        <h2>Near Earth Objects</h2>
+				<h2>Mars Rover Photos</h2>
+				<div className={styles["mars-cards-container"]}>
+					{
+						this.state.mars_photos.map((element) => {
+							return (
+								<div className={styles["mars-card"]} key={element.id}>
+									<img src={element.img_src} alt="mars"/>
+								</div>
+							);
+						})
+					}
+				</div>
 
+
+        <h2>Near Earth Objects</h2>
 				<div className={styles["object-cards-container"]}>
 					{
-						this.state.near_earth_objects.map((element) => {
+						this.state.near_earth_objects.slice(0,5).map((element) => {
 							return (
 								<div className={styles["object-card"]} key={element.id}>
 									<h3>{element.name}</h3>
@@ -56,6 +94,8 @@ class Main extends Component {
 						})
 					}
 				</div>
+
+
 
       </main>
     );
