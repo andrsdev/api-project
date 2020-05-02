@@ -17,12 +17,8 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.8);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     width: 100%;
     padding: var(--padding-content);
-    color: white;
     opacity: 1;
 
     transition: ease-in-out 0.5s all;
@@ -30,6 +26,15 @@
 
 .hero:hover {
     opacity: 0;
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 712px;
+    height: 100%;
+    color: white;
 }
 
 .description {

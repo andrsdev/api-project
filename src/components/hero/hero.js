@@ -37,11 +37,14 @@ class Hero extends Component {
 			<div className={styles["content"]}>
 				<img src={this.state.data.url} alt="background"/>
 				<div className={styles["hero"]}>
-					<h3>{this.state.data.date} </h3>
-					<h1>{this.state.data.title}</h1>
-					<p className={styles["description"]}>
-						{this.state.data.explanation}
-					</p>
+					<div className={styles["hero-text"]}>
+						<h3>{this.state.data.date} </h3>
+						<h1>{this.state.data.title}</h1>
+						<p className={styles["description"]}>
+							{this.state.data.explanation}
+						</p>
+
+					</div>
 					
 				</div>
 			</div>
