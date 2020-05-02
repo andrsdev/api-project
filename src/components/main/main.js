@@ -9,13 +9,17 @@ class Main extends Component {
     super(props);
     this.state = {
 			near_earth_objects: [],
-			mars_photos: []
+			mars_photos: [],
+			apollo: {},
+			solar_flare: {}
     };
   }
 
   componentDidMount() {
 		this.fetchNearEarthObjects();
 		this.fetchMarsPhotos();
+		this.fetchApollo();
+		this.fetchSolarFlare();
 	}
 
 	getTodayFormattedDate() {
@@ -23,6 +27,24 @@ class Main extends Component {
 		const formattedDate = Moment(today).format("YYYY-MM-DD");
 		return formattedDate;
 	}
+
+	async fetchApollo() {
+    try {
+      this.setState({
+        apollo: {},
+			});
+
+      const data = await request(
+        `https://images-api.nasa.gov/search?q=apollo%1969&description=moon%20landing&media_type=image`
+			);
+
+      this.setState({
+        apollo: data.collection.items[0]
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async fetchNearEarthObjects() {
     try {
@@ -53,18 +75,46 @@ class Main extends Component {
         `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?earth_date=2015-6-3&api_key=${environment.api_key}`
 			);
 
-			console.log(data.photos);
       this.setState({
         mars_photos: data.photos
       });
     } catch (error) {
       console.error(error);
     }
-  }
+	}
+	
+	
+  async fetchSolarFlare() {
+    try {
+      this.setState({
+        solar_flare: {},
+			});
+
+      const data = await request(
+        `https://api.nasa.gov/DONKI/FLR?startDate=2016-01-01&endDate=2016-01-30&api_key=${environment.api_key}`
+			);
+
+			console.log(data[0]);
+
+      this.setState({
+        solar_flare: data[0]
+      });
+    } catch (error) {
+      console.error(error);
+    }
+	}
+	
 
   render() {
     return (
       <main className={styles["content"]}>
+
+				<h2>Apollo 11</h2>
+				<div className={styles["apollo-grid"]}>
+					<img src={this.state.apollo.links?.[0].href} alt="apollo 11"/>
+					<p>{this.state.apollo.data?.[0].description}</p>
+				</div>
+	
 				<h2>Mars Rover Photos</h2>
 				<div className={styles["mars-cards-container"]}>
 					{
@@ -88,7 +138,7 @@ class Main extends Component {
         <h2>Near Earth Objects</h2>
 				<div className={styles["object-cards-container"]}>
 					{
-						this.state.near_earth_objects.slice(0,5).map((element) => {
+						this.state.near_earth_objects.map((element) => {
 							return (
 								<div className={styles["object-card"]} key={element.id}>
 									<h3>{element.name}</h3>
@@ -100,6 +150,15 @@ class Main extends Component {
 						})
 					}
 				</div>
+
+				<h2>Solar Flare</h2>
+				<br></br>
+				<br></br>
+				<p><strong>Active regions: </strong> {this.state.solar_flare.activeRegionNum}</p>
+				<p><strong>Source location: </strong> {this.state.solar_flare.sourceLocation}</p>
+				<p><strong>Class type: </strong> {this.state.solar_flare.classType}</p>
+				<p><strong>Begin time: </strong> {this.state.solar_flare.beginTime}</p>
+				<p><strong>Peak time: </strong> {this.state.solar_flare.peakTime}</p>
 
 
 

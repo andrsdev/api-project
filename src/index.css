@@ -43,8 +43,11 @@ h1 {
 }
 
 h2 {
+  border-bottom: 1px solid var(--color-lightGrey);
+  padding-bottom: 2rem;
   font-size: 3rem;
   margin: 0px;
+  margin-top: 4rem;
 }
 
 h3 {
