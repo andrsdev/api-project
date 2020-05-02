@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import request from 'utils/request';
 import styles from './hero.module.css';
+import environment from '.env.js'
 
 class Hero extends Component {
 
@@ -22,11 +23,10 @@ class Hero extends Component {
 				data: {}
 			});
 
-			const data = await request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY');
-			console.log(data);
-			  this.setState({
-			    data: data
-			  });
+			const data = await request(`https://api.nasa.gov/planetary/apod?api_key=${environment.api_key}`);
+			this.setState({
+				data: data
+			});
 		} catch (error) {
 			console.error(error);
 		}

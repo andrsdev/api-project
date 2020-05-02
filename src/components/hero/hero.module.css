@@ -17,24 +17,22 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.8);
-    width: 100%;
-    padding: var(--padding-content);
-    opacity: 1;
-
     transition: ease-in-out 0.5s all;
 }
 
-.hero:hover {
-    opacity: 0;
-}
+/* .hero:hover {
+    opacity: 1;
+} */
 
 .hero-text {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    max-width: 712px;
+    max-width: var(--max-width-content-tight);
+    padding: var(--padding-content);
     height: 100%;
     color: white;
+    margin: 0 auto;
 }
 
 .description {
