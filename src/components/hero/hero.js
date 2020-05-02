@@ -24,10 +24,9 @@ class Hero extends Component {
 			});
 
 			const data = await request(`https://api.nasa.gov/planetary/apod?api_key=${environment.api_key}`);
-			console.log(data);
-			  this.setState({
-			    data: data
-			  });
+			this.setState({
+				data: data
+			});
 		} catch (error) {
 			console.error(error);
 		}
