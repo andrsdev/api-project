@@ -17,16 +17,14 @@
     right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.8);
-    width: 100%;
     padding: var(--padding-content);
-    opacity: 0;
 
     transition: ease-in-out 0.5s all;
 }
 
-.hero:hover {
+/* .hero:hover {
     opacity: 1;
-}
+} */
 
 .hero-text {
     display: flex;

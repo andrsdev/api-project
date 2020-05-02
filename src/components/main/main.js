@@ -72,6 +72,12 @@ class Main extends Component {
 							return (
 								<div className={styles["mars-card"]} key={element.id}>
 									<img src={element.img_src} alt="mars"/>
+									<div className={styles["mars-card-text"]}>
+										<h3>{element.id}</h3>
+										<p><strong>Rover:</strong> {element.rover.name}</p>
+										<p><strong>Camera:</strong> {element.camera.full_name}</p>
+										<p><strong>Date:</strong> {element.earth_date}</p>
+									</div>
 								</div>
 							);
 						})
